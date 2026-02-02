@@ -51,7 +51,7 @@ jobs:
     steps:
       - name: Create Release
         id: create-release
-        uses: action/create-release@v1.1.4
+        uses: comnoco/create-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.github_token }}
         with:
