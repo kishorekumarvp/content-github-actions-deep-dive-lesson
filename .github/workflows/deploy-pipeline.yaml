@@ -44,3 +44,23 @@ jobs:
         with:
           name: zipped-bundle
           path: ${{ github.sha }}.zip
+
+  publish:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Create Release
+        id: create-release
+        uses: action/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.github_token }}
+        with:
+          tag_name: ${{ github.run_number }}
+          release_name: Release ${{ github.number }}
+          body: New Release for ${{ github.sha }}. Release notes can be found in docs.
+          draft: false
+          prerelease: false
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: zipped-bundle
